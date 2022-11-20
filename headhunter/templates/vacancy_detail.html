@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_block %}
+<div class="container">
+    <div class="row">
+        <div class="vacancy_block">
+            <h3 class="mt-3 vacancy_title">Вакансия: <b>{{vacancy.name}}</b></h3>
+            <p>Зарплата: <b>{{ vacancy.salary }} тг</b></p>
+            <p>Описание вакансии: <b>{{ vacancy.description }} </b></p>
+            <p>Требуемый опыт работы: <b>{{ vacancy.experience }} </b></p>
+            <p>Категория вакансии: <b>{{ vacancy.get_category_display }} </b></p>
+            <p class="reload_p">Обновлена: <b>{{ vacancy.updated_at }} </b>
+                {% if user.is_authenticated %}
+                {% if perms.core.change_vacancy or vacancy.author == request.user %}
+                <a class="reload_btn" href="{% url 'reload' vacancy.pk %}">Обновить <i
+                        class="fa-solid fa-rotate"></i></a>
+                {% endif %}
+                {% endif %}</p>
+            {% if user.is_authenticated %}
+            <div class="vacancy_link_block">
+                {% if perms.core.change_vacancy or vacancy.author == request.user %}
+                <a href="{% url 'vacancy_update' vacancy.pk %}" class="genric-btn primary circle">Редактировать</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

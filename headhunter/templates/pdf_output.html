@@ -1,0 +1,161 @@
+<!doctype html>
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!--<html class="no-js" lang="zxx">-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Headhunter</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/price_rangs.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+</head>
+<style>
+    @page {
+        size: "A4";
+        margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+    }
+</style>
+<body>
+<div class="job-post-company">
+    <div class="container">
+        <div class="row justify-content-between">
+            <!-- Left Content -->
+            <div class="col-xl-7 col-lg-8">
+                <!-- job single -->
+                <div class="single-job-items mb-50">
+                    <div class="job-items">
+                        {% for r in resume %}
+                        {% for a in author %}
+                        <div class="company-img company-img-details">
+                            <img src="{{ a.avatar.url }}" style="width: 85px; height: 85px" alt="hello">
+                        </div>
+                        {% endfor %}
+                        <div class="job-tittle">
+
+                            <h4>{{ r.author.username }}</h4>
+
+                            <ul>
+                                <li>Категория {{ r.category }}</li>
+
+                                <li>Желаемая зп {{ r.salary }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- job single End -->
+
+                <div class="job-post-details">
+                    <div class="post-details1 mb-50">
+                        <!-- Small Section Tittle -->
+                        {% for r in resume %}
+                        <div class="small-section-tittle">
+                            <h4>Обо мне</h4>
+                        </div>
+                        <p>{{ r.about }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Образование и курсы</h4>
+                        </div>
+                        <ul>
+                            {% for edu in education %}
+                            <li>Место обучения: <b>{{ edu.study }}</b> <br>
+                                В период с {{ edu.start_date }} по {{ edu.end_date }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Предыдущие места работы</h4>
+                        </div>
+                        <ul>
+                            {% for j in job %}
+                            <li>Название организации: <b>{{ j.company }}</b><br>
+                                В период с {{ j.start_date }} по {{ j.end_date }}<br>
+                                Обязанности: {{ j.description }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="post-details2  mb-50">
+                        <!-- Small Section Tittle -->
+                        <div class="small-section-tittle">
+                            <h4>Контакты:</h4>
+                        </div>
+                        <ul>
+                            {% for r in resume %}
+                            <li>Telegram <b>{{ r.telegram }}</b></li>
+                            <li>Linkedin <b>{{ r.linkedin }}</b></li>
+                            <li>Facebook <b>{{ r.facebook }}</b></li>
+                            <li>Email <b>{{ r.email }}</b></li>
+                            <li>Телефон <b>{{ r.phone_number }}</b></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js'%}"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js'%}"></script>
+<script src="{% static 'assets/js/popper.min.js'%}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js'%}"></script>
+<!-- Jquery Mobile Menu -->
+<script src="{% static 'assets/js/jquery.slicknav.min.js'%}"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="{% static 'assets/js/owl.carousel.min.js'%}"></script>
+<script src="{% static 'assets/js/slick.min.js'%}"></script>
+<script src="{% static 'assets/js/price_rangs.js'%}"></script>
+
+<!-- One Page, Animated-HeadLin -->
+<script src="{% static 'assets/js/wow.min.js'%}"></script>
+<script src="{% static 'assets/js/animated.headline.js'%}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.js'%}"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="{% static 'assets/js/jquery.scrollUp.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.nice-select.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.sticky.js'%}"></script>
+
+<!-- contact js -->
+<script src="{% static 'assets/js/contact.js'%}"></script>
+<script src="{% static 'assets/js/jquery.form.js'%}"></script>
+<script src="{% static 'assets/js/jquery.validate.min.js'%}"></script>
+<script src="{% static 'assets/js/mail-script.js'%}"></script>
+<script src="{% static 'assets/js/jquery.ajaxchimp.min.js'%}"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="{% static 'assets/js/plugins.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+<script src="{% static 'main.js'%}"></script>
+<!-- мой скрипт для форм выше -->
+</body>
+</html>

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_block %}
+{% load django_bootstrap5 %}
+<div class="job-post-company pt-120 pb-120">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <!-- Left Content -->
+                    <div class="col-xl-7 col-lg-8">
+                        <!-- job single -->
+                        <div class="single-job-items mb-50">
+                            <div class="job-items">
+                                <div class="company-img company-img-details">
+                                    <a href="{% url 'employer_profile' resume.author_id %}"><img src="{{ resume.author.avatar.url }}" style="width: 85px; height: 85px" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="{% url 'employer_profile' resume.author_id %}">
+                                        <h4>{{ resume.author.username }}</h4>
+                                    </a>
+                                    <ul>
+                                        <li>Категория {{ resume.category }}</li>
+
+                                        <li>Желаемая зп {{ resume.salary }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                          <!-- job single End -->
+
+                        <div class="job-post-details">
+                            <div class="post-details1 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Обо мне</h4>
+                                </div>
+                                <p>{{ resume.about }}</p>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                 <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Образование и курсы</h4>
+                                </div>
+                               <ul>
+                                   {% for edu in education %}
+                                   <li>Место обучения: <b>{{ edu.study }}</b> <br>
+                                   В период с {{ edu.start_date }} по {{ edu.end_date }}</li>
+                                   {% endfor %}
+                               </ul>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                 <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Предыдущие места работы</h4>
+                                </div>
+                               <ul>
+                                   {% for j in job %}
+                                       <li>Название организации: <b>{{ j.company }}</b><br>
+                                       В период с {{ j.start_date }} по {{ j.end_date }}<br>
+                                       Обязанности: {{ j.description }}</li>
+                                   {% endfor %}
+                               </ul>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                 <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Контакты:</h4>
+                                </div>
+                               <ul>
+                                   <li>Telegram <b>{{ resume.telegram }}</b></li>
+                                   <li>Linkedin <b>{{ resume.linkedin }}</b></li>
+                                   <li>Facebook <b>{{ resume.facebook }}</b></li>
+                                   <li>Email <b>{{ resume.email }}</b></li>
+                                   <li>Телефон <b>{{ resume.phone_number }}</b></li>
+                               </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
