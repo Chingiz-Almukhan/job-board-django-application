@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block main_block %}
+<div class="slider-area ">
+    <!-- Mobile Menu -->
+    <div class="slider-active">
+        <div class="single-slider slider-height d-flex align-items-center"
+             data-background="{% static 'assets/img/hero/h1_hero.jpg'%}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-9 col-md-10">
+                        <div class="hero__caption">
+                            <h1>Find the most exciting startup jobs</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Search Box -->
+                <div class="row">
+                    <div class="col-xl-8">
+                        <!-- form -->
+                        <form action="#" class="search-box">
+                            <div class="input-form">
+                                <input type="text" placeholder="Job Tittle or keyword">
+                            </div>
+                            <div class="select-form">
+                                <div class="select-itms">
+                                    <select name="select" id="select1">
+                                        <option value="">Location BD</option>
+                                        <option value="">Location PK</option>
+                                        <option value="">Location US</option>
+                                        <option value="">Location UK</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="search-form">
+                                <a href="#">Find job</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-4">
+        <h3 class="vacancies_title">
+            Вакансии
+        </h3>
+        <div class="vacancies_list_block">
+            {% for vacancy in vacancies %}
+            <div class="card-body">
+                <h5 class="card-title">{{ vacancy.name }}</h5>
+                <h6 class="card-subtitle mb-3 text-muted">{{ vacancy.get_category_display }}</h6>
+                <div class="btn__block">
+                    <a href="{% url 'vacancy_detail' vacancy.pk %}" class="genric-btn primary circle">Подробнее</a>
+                    {% if perms.core.change_vacancy or vacancy.author == request.user %}
+                    <a href="{% url 'vacancy_update'  vacancy.pk %}" class="genric-btn primary circle">Редактировать</a>
+                    {% endif %}
+                </div>
+                <p class="udated_vacancy mt-1">
+                    Обновлено: <span>{{ vacancy.updated_at }}</span>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block modal_block %}
+<div id="registerModal" class="modal">
+    <div class="modal-content"
+         style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+        <div>
+            <h4 class="register_title">Регистрация <span id="modalRegisterClose"
+                                                         class="close">&times;</span>
+            </h4>
+            <form action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form">
+                    {% bootstrap_form register_form %}
+                    {% bootstrap_button button_type="submit" content='Зарегистрироваться' %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="loginModal" class="modal">
+    <div class="modal-content"
+         style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+        <div>
+            <h5>Вход <span id="closeLogin" class="close">&times;</span></h5>
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="form">
+                    {% bootstrap_form login_form %}
+                    {% bootstrap_button button_type="submit" content='Войти' %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
