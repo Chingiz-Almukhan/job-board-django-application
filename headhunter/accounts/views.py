@@ -6,7 +6,7 @@ from django.views.generic import TemplateView, CreateView, DetailView, UpdateVie
 
 from accounts.forms import LoginForm, CustomUserCreationForm, UserChangeForm
 from accounts.models import Profile
-from core.models import Resume, Vacancy
+from core.models import Vacancy
 
 
 class LoginView(TemplateView):
@@ -58,3 +58,26 @@ class RegisterView(TemplateView):
             login(request, user)
             return redirect('main')
         return redirect('main')
+
+
+class EmployerDetailView(LoginRequiredMixin, DetailView):
+    model = get_user_model()
+    template_name = "employer_profile.html"
+    context_object_name = 'user_obj'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['vacancy'] = Vacancy.objects.filter(author=user).order_by('-updated_at')
+        context['change_form'] = UserChangeForm(instance=self.object)
+        return context
+
+
+class UserChangeView(UpdateView):
+    model = get_user_model()
+    form_class = UserChangeForm
+    template_name = 'employer_profile.html'
+    context_object_name = 'user_obj'
+
+    def get_success_url(self):
+        return reverse('employer_profile', kwargs={'pk': self.object.pk})
