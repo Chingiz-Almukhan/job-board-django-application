@@ -38,7 +38,7 @@ class Resume(models.Model):
     author = models.ForeignKey(Profile, verbose_name='Соискатель', on_delete=models.CASCADE)
     phone_number = models.CharField(verbose_name='Номер телефона', max_length=20, null=True, blank=True)
     updated_at = models.DateTimeField(verbose_name='Последние изменение', auto_now_add=True)
-    is_active = models.BooleanField(verbose_name='Скрыть резюме', default=False)
+    is_active = models.BooleanField(verbose_name='Скрыть резюме', default=True)
     telegram = models.CharField(verbose_name='Ссылка на телеграм', max_length=100, null=True, blank=True)
     linkedin = models.CharField(verbose_name='Ссылка на Linkedin', max_length=100, null=True, blank=True)
     facebook = models.CharField(verbose_name='Ссылка на Facebook', max_length=100, null=True, blank=True)

@@ -37,10 +37,17 @@
                                         <div class=" text-center">
                                             <a href="{% url 'resume_detail' resume.pk %}"
                                                class="genric-btn primary circle ">Подробнее</a>
-                                            <a href=""
+                                            <a href="{% url 'download' resume.pk %}"
                                                class="genric-btn primary circle mt-3">Скачать</a>
                                             <a href="{% url 'edit_resume' resume.pk %}"
-                                               class="genric-btn primary circle mt-3">Редактировать</a>
+                                               class="genric-btn primary circle mt-3">Изменить</a>
+                                            {% if resume.is_active is not True %}
+                                                <a href="{% url 'hide' resume.pk %}"
+                                                   class="genric-btn primary circle mt-3">Скрыть</a>
+                                            {% else %}
+                                                <a href="{% url 'hide' resume.pk %}"
+                                                   class="genric-btn primary circle mt-3">Отобразить</a>
+                                            {% endif %}
                                         </div>
 
                                         <p class="udated_vacancy">
