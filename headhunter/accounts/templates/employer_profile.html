@@ -17,7 +17,7 @@
                 {% if user_obj.user_role == 'Employer' %}
                 <a href="{% url 'vacancy_create' %}" class="genric-btn primary circle">Создать вакансию</a>
                 {% else %}
-                <a href="" class="genric-btn primary circle">Добавить резюме</a>
+                <a href="{% url 'add_resume' %}" class="genric-btn primary circle">Добавить резюме</a>
                 {% endif %}
                 <a href="#" id="register_button" class="genric-btn info circle">Редактировать профиль</a>
             </div>
