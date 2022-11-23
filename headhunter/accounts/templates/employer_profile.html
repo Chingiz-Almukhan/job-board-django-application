@@ -1,98 +1,107 @@
 {% extends "base.html" %}
 {% load static %}
 {% block main_block %}
-{% load django_bootstrap5 %}
+    {% load django_bootstrap5 %}
 
-<div class="container box_1170 mt-5 mb-200">
-    <div class="row">
-        <div class="col-md-3">
-            <img src="{{ user_obj.avatar.url }}" alt="" class="rounded-circle img-fluid">
-        </div>
-        <div class="col-md-9 mt-sm-20">
-            <div class="user_info">
-                <p class="user_name">Логин: <b>{{ user_obj.username }}</b></p>
-                <p class="user_mail">Email: <b>{{ user_obj.email }}</b></p>
-                <p class="user_mail">Мобильный телефон: <b>{{ user_obj.phone_number }}</b></p>
-                <p class="user_mail">Роль: <b>{{ user_obj.get_user_role_display }}</b></p>
-                {% if user_obj.user_role == 'Employer' %}
-                <a href="{% url 'vacancy_create' %}" class="genric-btn primary circle">Создать вакансию</a>
-                {% else %}
-                <a href="{% url 'add_resume' %}" class="genric-btn primary circle">Добавить резюме</a>
-                {% endif %}
-                <a href="#" id="register_button" class="genric-btn info circle">Редактировать профиль</a>
-            </div>
-        </div>
-    </div>
-    {% if user_obj.user_role == 'Employee' %}
-    <div class="section-top-border mt-5">
-        <h3 class="mb-30">Мои резюме</h3>
+    <div class="container box_1170 mt-5 mb-200">
         <div class="row">
-            {% for resume in resumes %}
-            <div class="col-md-4 mt-3">
-                <div class="single-defination">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{resume.category}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Желаемая зп {{resume.salary}}</h6>
-                            <a href="{% url 'resume_detail' resume.pk %}"
-                               class="genric-btn primary circle">Подробнее</a>
-                            <a href="{% url 'update' resume.pk %}"
-                               class="genric-btn primary circle">Обновить</a>
-                            <a href="{% url 'download' resume.pk %}"
-                               class="genric-btn primary circle">Скачать</a>
-                        </div>
-                    </div>
+            <div class="col-md-3">
+                <img src="{{ user_obj.avatar.url }}" alt="" class="rounded-circle img-fluid">
+            </div>
+            <div class="col-md-9 mt-sm-20">
+                <div class="user_info">
+                    <p class="user_name">Логин: <b>{{ user_obj.username }}</b></p>
+                    <p class="user_mail">Email: <b>{{ user_obj.email }}</b></p>
+                    <p class="user_mail">Мобильный телефон: <b>{{ user_obj.phone_number }}</b></p>
+                    <p class="user_mail">Роль: <b>{{ user_obj.get_user_role_display }}</b></p>
+                    {% if user_obj.user_role == 'Employer' %}
+                        <a href="{% url 'vacancy_create' %}" class="genric-btn primary circle">Создать вакансию</a>
+                    {% else %}
+                        <a href="{% url 'add_resume' %}" class="genric-btn primary circle">Добавить резюме</a>
+                    {% endif %}
+                    <a href="#" id="register_button" class="genric-btn info circle">Редактировать профиль</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
-    </div>
-    {% else %}
-    <div class="section-top-border mt-5">
-        <h3 class="mb-30">Мои Вакансии</h3>
-        <div class="row">
-            {% for v in vacancy %}
-            <div class="col-md-4 mt-3">
-                <div class="single-defination">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{v.name}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{v.get_category_display}}</h6>
-                            <div class="btn__block">
-                                <a href="{% url 'vacancy_detail' v.pk %}"
-                                   class="genric-btn primary circle">Подробнее</a>
-                                <a href="{% url 'vacancy_update' v.pk %}" class="genric-btn primary circle">Редактировать</a>
+        {% if user_obj.user_role == 'Employee' %}
+            <div class="section-top-border mt-5">
+                <h3 class="mb-30">Мои резюме</h3>
+                <div class="row">
+                    {% for resume in resumes %}
+                        <div class="col-md-4 mt-3">
+                            <div class="single-defination">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ resume.name }}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ resume.get_category_display }}</h6>
+                                        <div class=" text-center">
+                                            <a href="{% url 'resume_detail' resume.pk %}"
+                                               class="genric-btn primary circle ">Подробнее</a>
+                                            <a href=""
+                                               class="genric-btn primary circle mt-3">Скачать</a>
+                                            <a href="{% url 'edit_resume' resume.pk %}"
+                                               class="genric-btn primary circle mt-3">Редактировать</a>
+                                        </div>
+
+                                        <p class="udated_vacancy">
+                                            Обновлено: <span>{{ resume.updated_at|date:"M d, Y G:i"}}</span>
+                                            <a class="reload_btn" href="{% url 'update' resume.pk %}">Обновить <i
+                                                    class="fa-solid fa-rotate"></i></a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="udated_vacancy">
-                                Обновлено: <span>{{ v.updated_at }}</span>
-                                <a class="reload_btn" href="{% url 'reload' v.pk %}">Обновить <i class="fa-solid fa-rotate"></i></a>
-                            </p>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
-            {% endfor %}
+        {% else %}
+            <div class="section-top-border mt-5">
+                <h3 class="mb-30">Мои Вакансии</h3>
+                <div class="row">
+                    {% for v in vacancy %}
+                        <div class="col-md-4 mt-3">
+                            <div class="single-defination">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ v.name }}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ v.get_category_display }}</h6>
+                                        <div class="btn__block">
+                                            <a href="{% url 'vacancy_detail' v.pk %}"
+                                               class="genric-btn primary circle">Подробнее</a>
+                                            <a href="{% url 'vacancy_update' v.pk %}" class="genric-btn primary circle">Редактировать</a>
+                                        </div>
+                                        <p class="udated_vacancy">
+                                            Обновлено: <span>{{ v.updated_at }}</span>
+                                            <a class="reload_btn" href="{% url 'reload' v.pk %}">Обновить <i
+                                                    class="fa-solid fa-rotate"></i></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div id="registerModal" class="modal">
+        <div class="modal-content"
+             style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+            <div>
+                <h4 class="register_title">Редактировать профиль<span id="modalRegisterClose"
+                                                                      class="close">&times;</span>
+                </h4>
+                <form action="{% url 'user_update' user_obj.pk %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% csrf_token %}
+                    {% bootstrap_form change_form %}
+                    {% bootstrap_button button_type="submit" content='Изменить' %}
+
+                </form>
+            </div>
         </div>
     </div>
-    {% endif %}
-</div>
-<div id="registerModal" class="modal">
-    <div class="modal-content"
-         style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
-        <div>
-            <h4 class="register_title">Редактировать профиль<span id="modalRegisterClose"
-                                                                  class="close">&times;</span>
-            </h4>
-            <form action="{% url 'user_update' user_obj.pk %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-
-                {% csrf_token %}
-                {% bootstrap_form change_form %}
-                {% bootstrap_button button_type="submit" content='Изменить' %}
-
-            </form>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

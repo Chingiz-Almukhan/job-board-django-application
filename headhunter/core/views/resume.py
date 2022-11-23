@@ -1,7 +1,8 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views import View
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
 
 from core.forms import ResumeChangeForm, EducationAddEditForm, JobAddEditForm
 from core.models import Resume, Education, Job
@@ -64,3 +65,22 @@ def delete_resume(request, *args, **kwargs):
     resume = Resume.objects.filter(pk=kwargs.get('pk'))
     resume.delete()
     return redirect('employer_profile', pk=request.user.pk)
+
+
+class ResumeDetailView(DetailView):
+    model = Resume
+    template_name = "resume_detail.html"
+    context_object_name = 'resume'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['education'] = Education.objects.filter(resume_id=self.object.pk)
+        context['job'] = Job.objects.filter(resume_id=self.object.pk)
+        return context
+
+
+def update_resume(request, *args, **kwargs):
+    resume = get_object_or_404(Resume, pk=kwargs['pk'])
+    resume.updated_at = timezone.now()
+    resume.save()
+    return redirect('employer_profile', pk=resume.author_id)

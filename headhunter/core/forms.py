@@ -15,12 +15,12 @@ class ResumeChangeForm(forms.ModelForm):
         attrs={'placeholder': 'Введите ссылку на телеграм', 'class': "form-control"}))
     email = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Введите почту', 'class': "form-control"}))
-    phone_number = forms.CharField(required=True, widget=forms.TextInput(
+    phone_number = forms.CharField(required=True, label='номер телефона', widget=forms.TextInput(
         attrs={'placeholder': 'Введите номер телефона', 'class': "form-control"}))
 
     class Meta:
         model = Resume
-        fields = ('category', 'about', 'salary', 'telegram', 'email', 'phone_number', 'linkedin', 'facebook')
+        fields = ('name', 'category', 'about', 'salary', 'telegram', 'email', 'phone_number', 'linkedin', 'facebook')
         required_fields = ['category', 'telegram', 'email', 'phone_number']
 
 

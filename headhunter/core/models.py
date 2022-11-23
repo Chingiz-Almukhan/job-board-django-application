@@ -29,6 +29,7 @@ class Vacancy(models.Model):
 
 
 class Resume(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Название резюме', null=True, blank=True)
     category = models.TextField(verbose_name='Категория вакансии', choices=CATEGORY, null=True, blank=True)
     about = models.TextField(max_length=3000, verbose_name='О себе')
     salary = models.DecimalField(verbose_name='Желаемая зарплата', max_digits=10, decimal_places=2, null=True,
