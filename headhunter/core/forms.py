@@ -49,7 +49,7 @@ class EducationAddEditForm(forms.ModelForm):
 class JobAddEditForm(forms.ModelForm):
     company = forms.CharField(required=True, label='Название', widget=forms.TextInput(
         attrs={'placeholder': 'Введите название', 'class': "form-control"}))
-    description = forms.CharField(required=True, label='Название', widget=forms.TextInput(
+    description = forms.CharField(required=True, label='Обязанности', widget=forms.TextInput(
         attrs={'placeholder': 'Введите свои обязанности', 'class': "form-control"}))
     start_date = forms.DateField(widget=DateInput, label='Дата начала обучения', required=True)
     end_date = forms.DateField(widget=DateInput, label='Дата окончания обучения', required=True)

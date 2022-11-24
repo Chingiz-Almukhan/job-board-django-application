@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block form %}
+    <div class="container box_1170  pb-100">
+        <form action="{% url 'edit_job' job.pk %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn head-btn1 mt-4">Сохранить</button>
+        </form>
+    </div>
+
+{% endblock %}

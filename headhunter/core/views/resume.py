@@ -8,7 +8,7 @@ from django.views import View
 from weasyprint import HTML
 import tempfile
 from django.http import HttpResponse
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
 from accounts.models import Profile
 from core.forms import ResumeChangeForm, EducationAddEditForm, JobAddEditForm
@@ -33,6 +33,8 @@ class ResumeEditView(UpdateView):
         context = super(ResumeEditView, self).get_context_data(**kwargs)
         context['education_form'] = EducationAddEditForm()
         context['job_form'] = JobAddEditForm()
+        context['education'] = Education.objects.filter(resume_id=self.object.pk)
+        context['job'] = Job.objects.filter(resume_id=self.object.pk)
         return context
 
     def get_success_url(self):
@@ -126,3 +128,37 @@ def hide_resume(request, *args, **kwargs):
         resume.is_active = False
     resume.save()
     return redirect('employer_profile', pk=resume.author_id)
+
+
+class DeleteEducationView(DeleteView):
+    model = Education
+
+    def get_success_url(self):
+        return reverse('edit_resume', kwargs={'pk': self.object.resume.pk})
+
+
+class EditEducationView(UpdateView):
+    model = Education
+    form_class = EducationAddEditForm
+    template_name = 'edit_education.html'
+    context_object_name = 'education'
+
+    def get_success_url(self):
+        return reverse('edit_resume', kwargs={'pk': self.object.resume.pk})
+
+
+class DeleteJobView(DeleteView):
+    model = Job
+
+    def get_success_url(self):
+        return reverse('edit_resume', kwargs={'pk': self.object.resume.pk})
+
+
+class EditJobView(UpdateView):
+    model = Job
+    form_class = JobAddEditForm
+    template_name = 'edit_job.html'
+    context_object_name = 'job'
+
+    def get_success_url(self):
+        return reverse('edit_resume', kwargs={'pk': self.object.resume.pk})

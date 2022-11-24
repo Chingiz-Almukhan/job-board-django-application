@@ -19,7 +19,7 @@ class VacancyCreate(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('employer_profile', kwargs={'pk': self.object.pk})
+        return reverse('employer_profile', kwargs={'pk': self.object.author_id})
 
 
 class VacancyUpdate(UserPassesTestMixin, UpdateView):
