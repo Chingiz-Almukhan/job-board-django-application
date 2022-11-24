@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
 
 from core.forms import VacancyForm
-from core.models import Vacancy
+from core.models import Vacancy, Resume
 
 
 class VacancyCreate(CreateView):
@@ -38,6 +38,11 @@ class VacancyDetail(DetailView):
     template_name = "vacancy_detail.html"
     model = Vacancy
     context_object_name = "vacancy"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['resumes'] = Resume.objects.filter(author=self.request.user)
+        return context
 
 
 def vacancy_reload(request, *args, **kwargs):

@@ -1,82 +1,113 @@
 {% extends "base.html" %}
 {% load static %}
 {% block main_block %}
-{% load django_bootstrap5 %}
-<div class="job-post-company  pb-120">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <!-- Left Content -->
-                    <div class="col-xl-7 col-lg-8">
-                        <!-- job single -->
-                        <div class="single-job-items mb-50">
-                            <div class="job-items">
-                                <div class="company-img company-img-details">
-                                    <a href="{% url 'employer_profile' resume.author_id %}"><img src="{{ resume.author.avatar.url }}" style="width: 85px; height: 85px" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="{% url 'employer_profile' resume.author_id %}">
-                                        <h4>{{ resume.author.username }}</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Категория {{ resume.category }}</li>
+    {% load django_bootstrap5 %}
+    <div class="job-post-company  pb-120">
+        <div class="container">
+            <div class="row justify-content-between">
+                <!-- Left Content -->
+                <div class="col-xl-7 col-lg-8">
+                    <!-- job single -->
+                    <div class="single-job-items mb-50">
+                        <div class="job-items">
+                            <div class="company-img company-img-details">
+                                <a href="{% url 'employer_profile' resume.author_id %}"><img
+                                        src="{{ resume.author.avatar.url }}" style="width: 85px; height: 85px"
+                                        alt=""></a>
+                            </div>
+                            <div class="job-tittle">
+                                <a href="{% url 'employer_profile' resume.author_id %}">
+                                    <h4>{{ resume.author.username }}</h4>
+                                </a>
+                                <ul>
+                                    <li>Категория {{ resume.category }}</li>
 
-                                        <li>Желаемая зп {{ resume.salary }}</li>
-                                    </ul>
-                                </div>
+                                    <li>Желаемая зп {{ resume.salary }}</li>
+                                </ul>
                             </div>
                         </div>
-                          <!-- job single End -->
-
-                        <div class="job-post-details">
-                            <div class="post-details1 mb-50">
-                                <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Обо мне</h4>
-                                </div>
-                                <p>{{ resume.about }}</p>
-                            </div>
-                            <div class="post-details2  mb-50">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Образование и курсы</h4>
-                                </div>
-                               <ul>
-                                   {% for edu in education %}
-                                   <li>Место обучения: <b>{{ edu.study }}</b> <br>
-                                   В период с {{ edu.start_date }} по {{ edu.end_date }}</li>
-                                   {% endfor %}
-                               </ul>
-                            </div>
-                            <div class="post-details2  mb-50">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Предыдущие места работы</h4>
-                                </div>
-                               <ul>
-                                   {% for j in job %}
-                                       <li>Название организации: <b>{{ j.company }}</b><br>
-                                       В период с {{ j.start_date }} по {{ j.end_date }}<br>
-                                       Обязанности: {{ j.description }}</li>
-                                   {% endfor %}
-                               </ul>
-                            </div>
-                            <div class="post-details2  mb-50">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Контакты:</h4>
-                                </div>
-                               <ul>
-                                   <li>Telegram <b>{{ resume.telegram }}</b></li>
-                                   <li>Linkedin <b>{{ resume.linkedin }}</b></li>
-                                   <li>Facebook <b>{{ resume.facebook }}</b></li>
-                                   <li>Email <b>{{ resume.email }}</b></li>
-                                   <li>Телефон <b>{{ resume.phone_number }}</b></li>
-                               </ul>
-                            </div>
-                        </div>
-
                     </div>
+                    <!-- job single End -->
+
+                    <div class="job-post-details">
+                        <div class="post-details1 mb-50">
+                            <!-- Small Section Tittle -->
+                            <div class="small-section-tittle">
+                                <h4>Обо мне</h4>
+                            </div>
+                            <p>{{ resume.about }}</p>
+                        </div>
+                        <div class="post-details2  mb-50">
+                            <!-- Small Section Tittle -->
+                            <div class="small-section-tittle">
+                                <h4>Образование и курсы</h4>
+                            </div>
+                            <ul>
+                                {% for edu in education %}
+                                    <li>Место обучения: <b>{{ edu.study }}</b> <br>
+                                        В период с {{ edu.start_date }} по {{ edu.end_date }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="post-details2  mb-50">
+                            <!-- Small Section Tittle -->
+                            <div class="small-section-tittle">
+                                <h4>Предыдущие места работы</h4>
+                            </div>
+                            <ul>
+                                {% for j in job %}
+                                    <li>Название организации: <b>{{ j.company }}</b><br>
+                                        В период с {{ j.start_date }} по {{ j.end_date }}<br>
+                                        Обязанности: {{ j.description }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="post-details2  mb-50">
+                            <!-- Small Section Tittle -->
+                            <div class="small-section-tittle">
+                                <h4>Контакты:</h4>
+                            </div>
+                            <ul>
+                                <li>Telegram <b>{{ resume.telegram }}</b></li>
+                                <li>Linkedin <b>{{ resume.linkedin }}</b></li>
+                                <li>Facebook <b>{{ resume.facebook }}</b></li>
+                                <li>Email <b>{{ resume.email }}</b></li>
+                                <li>Телефон <b>{{ resume.phone_number }}</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button id="response_resume" class="genric-btn primary circle">Оставить отклик</button>
+
                 </div>
             </div>
         </div>
+    </div>
+    <div id="responseModalResume" class="modal">
+        <div class="modal-content"
+             style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+            <div>
+                <h4 class="register_title">Оставить отклик <span id="modalResponseResume"
+                                                                 class="close">&times;</span>
+                </h4>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="form">
+                        <label class="form-label" for="id_message">Сообщение</label>
+                        <input type="text" name="message" placeholder="Введите сообщение" class="form-control" required
+                               id="id_message" value="Добрый день! Нас заинтересовало Ваше резюме">
+                        <label class="form-label" for="select_resume">Выберете вакансию</label>
+                        <select class="form-select" aria-label="Default select example" id="select_resume">
+                            {% for v in vacancy %}
+                                <option value="{{ v.pk }}" class="option">{{ v.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <span id="send_response" class="genric-btn primary circle mt-10">Отправить</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <script src="{% static 'response_resume.js' %}"></script>
 {% endblock %}

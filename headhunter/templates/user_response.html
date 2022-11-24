@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_block %}
+    <div class="container box_1170 mt-5 pb-200">
+        <div class="row">
+            {% if user.is_authenticated %}
+                {% for response in responses %}
+                    {% if request.user.user_role == 'Employee' %}
+                        {% if response.resume.author == request.user %}
+                            <div class="col-md-4 mt-3">
+                                <div class="card " style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Отклик {{ forloop.counter }}</h5>
+                                        <p class="card-text">Вакансия: <a class="list-unstyled text-dark"
+                                                                          href="{% url 'vacancy_detail' response.vacancy.pk %}">
+                                            {{ response.vacancy.name }}
+                                        </a></p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><p class="card-text">Резюме: <a
+                                                class="list-unstyled text-dark"
+                                                href="{% url 'resume_detail' response.resume.pk %}">
+                                            {{ response.resume.name }}
+                                        </a></p></li>
+                                        <li class="list-group-item"><p class="card-text">Название компании <a
+                                                class="list-unstyled text-dark"
+                                                href="{% url 'employer_profile' response.vacancy.author.pk %}">
+                                            {{ response.vacancy.author.username }}
+                                        </a></p></li>
+                                    </ul>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            {% for message in messages %}
+                                                {% if message.chat_id == response.pk %}
+                                                    <img
+                                                            src="{{ message.user.avatar.url }}"
+                                                            alt="avatar 1" class="mt-2 mb-2"
+                                                            style="width: 45px; height: 100%;"> {{ message.user.username }}
+                                                    <div class="p-3 ms-3"
+                                                         style="background-color: rgba(57, 192, 237,.2);">
+                                                        <p class="small mb-0">{{ message.text }}</p></div>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <form action="{% url 'send_message' response.pk %}" method="post"
+                                                  class="mt-2">
+                                                {% csrf_token %}
+                                                <label> Добавить сообщение:</label>
+                                                <input type="text" name="message" placeholder="Введите сообщение"
+                                                       class="form-control" required
+                                                       id="id_message">
+                                                <button type="submit" class="genric-btn primary circle mt-2">Отправить
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+
+
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    {% else %}
+                        {% if response.vacancy.author == request.user %}
+                            <div class="col-md-4 mt-3">
+                                <div class="card " style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Отклик {{ forloop.counter }}</h5>
+                                        <p class="card-text">Вакансия: <a class="list-unstyled text-dark"
+                                                                          href="{% url 'vacancy_detail' response.vacancy.pk %}">
+                                            {{ response.vacancy.name }}
+                                        </a></p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><p class="card-text">Резюме: <a
+                                                class="list-unstyled text-dark"
+                                                href="{% url 'resume_detail' response.resume.pk %}">
+                                            {{ response.resume.name }}
+                                        </a></p></li>
+                                        <li class="list-group-item"><p class="card-text">Кандидат: <a
+                                                class="list-unstyled text-dark"
+                                                href="{% url 'employer_profile' response.resume.author.pk %}">
+                                            {{ response.resume.author.username }}
+                                        </a></p></li>
+                                    </ul>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            {% for message in messages %}
+                                                {% if message.chat_id == response.pk %}
+                                                    <img
+                                                            src="{{ message.user.avatar.url }}"
+                                                            alt="avatar 1" class="mt-2 mb-2"
+                                                            style="width: 45px; height: 100%;"> {{ message.user.username }}
+                                                    <div class="p-3 ms-3"
+                                                         style="background-color: rgba(57, 192, 237,.2);">
+                                                        <p class="small mb-0">{{ message.text }}</p></div>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <form action="{% url 'send_message' response.pk %}" method="post"
+                                                  class="mt-2">
+                                                {% csrf_token %}
+                                                <label> Добавить сообщение:</label>
+                                                <input type="text" name="message" placeholder="Введите сообщение"
+                                                       class="form-control" required
+                                                       id="id_message">
+                                                <button type="submit" class="genric-btn primary circle mt-2">Отправить
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+
+
+                                </div>
+                            </div>
+                            {% endif %}
+                    {% endif %}
+
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

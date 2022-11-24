@@ -3,7 +3,6 @@ window.addEventListener('load', function() {
     let log_button = $('#login_button');
     let register = $('#registerModal');
     let login = $('#loginModal');
-    // let form = $('.modal-content');
     reg_button.on('click', function() {
         register[0].style.display = "block";
     });

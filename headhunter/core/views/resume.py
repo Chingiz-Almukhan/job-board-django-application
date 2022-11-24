@@ -12,7 +12,7 @@ from django.views.generic import DetailView, CreateView, UpdateView
 
 from accounts.models import Profile
 from core.forms import ResumeChangeForm, EducationAddEditForm, JobAddEditForm
-from core.models import Resume, Education, Job
+from core.models import Resume, Education, Job, Vacancy
 
 
 class ResumeAddView(CreateView):
@@ -83,6 +83,7 @@ class ResumeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['education'] = Education.objects.filter(resume_id=self.object.pk)
         context['job'] = Job.objects.filter(resume_id=self.object.pk)
+        context['vacancy'] = Vacancy.objects.filter(author=self.request.user)
         return context
 
 

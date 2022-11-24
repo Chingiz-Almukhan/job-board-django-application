@@ -3,7 +3,7 @@
 {% block main_block %}
     {% load django_bootstrap5 %}
 
-    <div class="container box_1170 mt-5 mb-200">
+    <div class="container box_1170 mt-5 pb-100">
         <div class="row">
             <div class="col-md-3">
                 <img src="{{ user_obj.avatar.url }}" alt="" class="rounded-circle img-fluid">
@@ -20,6 +20,7 @@
                         <a href="{% url 'add_resume' %}" class="genric-btn primary circle">Добавить резюме</a>
                     {% endif %}
                     <a href="#" id="register_button" class="genric-btn info circle">Редактировать профиль</a>
+                    <a href="{% url 'show_responses' %}" id="register_button" class="genric-btn info circle">Отклики</a>
                 </div>
             </div>
         </div>
@@ -49,7 +50,6 @@
                                                    class="genric-btn primary circle mt-3">Отобразить</a>
                                             {% endif %}
                                         </div>
-
                                         <p class="udated_vacancy">
                                             Обновлено: <span>{{ resume.updated_at|date:"M d, Y G:i"}}</span>
                                             <a class="reload_btn" href="{% url 'update' resume.pk %}">Обновить <i

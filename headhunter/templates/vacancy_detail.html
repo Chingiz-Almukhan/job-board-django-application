@@ -1,29 +1,59 @@
 {% extends "base.html" %}
 {% load static %}
 {% block main_block %}
-<div class="container">
-    <div class="row">
-        <div class="vacancy_block">
-            <h3 class="mt-3 vacancy_title">Вакансия: <b>{{vacancy.name}}</b></h3>
-            <p>Зарплата: <b>{{ vacancy.salary }} тг</b></p>
-            <p>Описание вакансии: <b>{{ vacancy.description }} </b></p>
-            <p>Требуемый опыт работы: <b>{{ vacancy.experience }} </b></p>
-            <p>Категория вакансии: <b>{{ vacancy.get_category_display }} </b></p>
-            <p class="reload_p">Обновлена: <b>{{ vacancy.updated_at }} </b>
+    <div class="container">
+        <div class="row">
+            <div class="vacancy_block">
+                <h3 class="mt-3 vacancy_title">Вакансия: <b>{{ vacancy.name }}</b></h3>
+                <p>Зарплата: <b>{{ vacancy.salary }} тг</b></p>
+                <p>Описание вакансии: <b>{{ vacancy.description }} </b></p>
+                <p>Требуемый опыт работы: <b>{{ vacancy.experience }} </b></p>
+                <p>Категория вакансии: <b>{{ vacancy.get_category_display }} </b></p>
+                <p class="reload_p">Обновлена: <b>{{ vacancy.updated_at }} </b>
+                    {% if user.is_authenticated %}
+                        {% if perms.core.change_vacancy or vacancy.author == request.user %}
+                            <a class="reload_btn" href="{% url 'reload' vacancy.pk %}">Обновить <i
+                                    class="fa-solid fa-rotate"></i></a>
+                        {% endif %}
+                    {% endif %}</p>
                 {% if user.is_authenticated %}
-                {% if perms.core.change_vacancy or vacancy.author == request.user %}
-                <a class="reload_btn" href="{% url 'reload' vacancy.pk %}">Обновить <i
-                        class="fa-solid fa-rotate"></i></a>
-                {% endif %}
-                {% endif %}</p>
-            {% if user.is_authenticated %}
-            <div class="vacancy_link_block">
-                {% if perms.core.change_vacancy or vacancy.author == request.user %}
-                <a href="{% url 'vacancy_update' vacancy.pk %}" class="genric-btn primary circle">Редактировать</a>
+                    <div class="vacancy_link_block">
+                        {% if perms.core.change_vacancy or vacancy.author == request.user %}
+                            <a href="{% url 'vacancy_update' vacancy.pk %}" class="genric-btn primary circle">Редактировать</a>
+                        {% endif %}
+                        <button id="response_button" class="genric-btn primary circle">Оставить отклик</button>
+                    </div>
                 {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
-</div>
+    <div id="responseModal" class="modal">
+        <div class="modal-content"
+             style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+            <div>
+                <h4 class="register_title">Оставить отклик <span id="modalResponse"
+                                                                 class="close">&times;</span>
+                </h4>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="form">
+                        <label class="form-label" for="id_message">Сообщение</label>
+                        <input type="text" name="message" placeholder="Введите сообщение" class="form-control" required
+                               id="id_message" value="Добрый день! Хочу у Вас работать">
+                        <label class="form-label" for="select_resume">Выберете резюме</label>
+                        <select class="form-select" aria-label="Default select example" id="select_resume">
+                            {% for resume in resumes %}
+                                <option value="{{ resume.pk }}" class="option">{{ resume.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <span id="send_response" class="genric-btn primary circle mt-10">Отправить</span>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <script src="{% static 'response.js'%}"></script>
 {% endblock %}
