@@ -18,53 +18,38 @@
                 <!-- Search Box -->
                 <div class="row">
                     <div class="col-xl-8">
-                        <!-- form -->
-                        <form action="#" class="search-box">
-                            <div class="input-form">
-                                <input type="text" placeholder="Job Tittle or keyword">
-                            </div>
-                            <div class="select-form">
-                                <div class="select-itms">
-                                    <select name="select" id="select1">
-                                        <option value="">Location BD</option>
-                                        <option value="">Location PK</option>
-                                        <option value="">Location US</option>
-                                        <option value="">Location UK</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="search-form">
-                                <a href="#">Find job</a>
-                            </div>
-                        </form>
+                       {% include 'partial/search.html' %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row mt-4">
+<div class="container mt-4">
+    <div class="vacancy_container">
         <h3 class="vacancies_title">
             Вакансии
         </h3>
-        <div class="vacancies_list_block">
-            {% for vacancy in vacancies %}
-            <div class="card-body">
-                <h5 class="card-title">{{ vacancy.name }}</h5>
-                <h6 class="card-subtitle mb-3 text-muted">{{ vacancy.get_category_display }}</h6>
-                <div class="btn__block">
-                    <a href="{% url 'vacancy_detail' vacancy.pk %}" class="genric-btn primary circle">Подробнее</a>
-                    {% if perms.core.change_vacancy or vacancy.author == request.user %}
-                    <a href="{% url 'vacancy_update'  vacancy.pk %}" class="genric-btn primary circle">Редактировать</a>
-                    {% endif %}
+        <div id="vacancies" class="vacancies_list_block">
+            {% for v in vacancy %}
+            <a href="{% url 'vacancy_detail' v.pk %}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ v.name }}</h5>
+                    <p>{{ v.category }}</p>
+                    <p class="salary_text">{% load humanize %} {{ v.salary|intcomma }} KZT</p>
+                    <p>Компания:
+                        <a class="company_title" href="{% url 'employer_profile' v.author.pk %}">
+                            {{ v.author.username }}
+                        </a>
+                    </p>
+                    <p class="udated_vacancy mt-1">
+                        Опубликовано: <span><b>{{ v.updated_at|date:"d-m-Y H:i" }}</b></span>
+                    </p>
                 </div>
-                <p class="udated_vacancy mt-1">
-                    Обновлено: <span>{{ vacancy.updated_at }}</span>
-                </p>
-            </div>
+            </a>
             {% endfor %}
         </div>
+        {% include 'partial/pagination.html' %}
     </div>
 </div>
 {% endblock %}

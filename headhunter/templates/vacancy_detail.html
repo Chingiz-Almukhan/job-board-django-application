@@ -9,7 +9,7 @@
                 <p>Описание вакансии: <b>{{ vacancy.description }} </b></p>
                 <p>Требуемый опыт работы: <b>{{ vacancy.experience }} </b></p>
                 <p>Категория вакансии: <b>{{ vacancy.get_category_display }} </b></p>
-                <p class="reload_p">Обновлена: <b>{{ vacancy.updated_at }} </b>
+                <p class="reload_p">Обновлена: <b>{{ vacancy.updated_at|date:"d-m-Y H:i" }} </b>
                     {% if user.is_authenticated %}
                         {% if perms.core.change_vacancy or vacancy.author == request.user %}
                             <a class="reload_btn" href="{% url 'reload' vacancy.pk %}">Обновить <i

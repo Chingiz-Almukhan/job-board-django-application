@@ -1,3 +1,7 @@
+a {
+    color: #000000;
+}
+
 .modal {
     display: none;
     width: 100%;
@@ -63,6 +67,48 @@ body {
 .vacancies_list_block .card-body {
     min-width: 350px;
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
-    margin: 17px 12px;
-    max-width: 375px;
+    margin: 17px 0px;
+    width: 100%;
 }
+
+.salary_text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000000;
+}
+
+
+.paginate_item_selected {
+    color:  #1f2b7b;
+}
+
+.page_num a, .paginate_item {
+    border: 1px solid #ddd;
+    padding: 6px 14px;
+}
+
+.page_num a:hover {
+    color:  #1f2b7b;
+}
+
+.paginate_item:hover {
+    color:  #1f2b7b;
+}
+
+.paginate_list {
+    display: flex;
+}
+
+.paginate_list li {
+    margin: 0px 8px;
+}
+
+.paginate {
+    display: flex;
+    justify-content: center;
+}
+
+.company_title:hover {
+    color: #1f2b7b;
+}
+

@@ -65,15 +65,6 @@
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
                                         <li><a href="{% url 'main' %}" style="color: white">На главную</a></li>
-                                        <!--                                        <li><a href="#">Find a Jobs </a></li>-->
-                                        <!--                                        <li><a href="#">Page</a>-->
-                                        <!--                                            <ul class="submenu">-->
-                                        <!--                                                <li><a href="#">Blog</a></li>-->
-                                        <!--                                                <li><a href="#">Blog Details</a></li>-->
-                                        <!--                                                <li><a href="#">Elements</a></li>-->
-                                        <!--                                                <li><a href="#">job Details</a></li>-->
-                                        <!--                                            </ul>-->
-                                        <!--                                        </li>-->
                                         {% if user.is_authenticated %}
                                         <li><a href="{% url 'employer_profile' user.pk %}" style="color: white">Личный
                                             кабинет</a></li>
@@ -163,6 +154,7 @@
 <script src="{% static 'assets/js/plugins.js'%}"></script>
 <script src="{% static 'assets/js/main.js'%}"></script>
 <script src="{% static 'main.js'%}"></script>
+<script src="{% static 'liveSearch.js'%}"></script>
 <!-- мой скрипт для форм выше -->
 </body>
 </html>

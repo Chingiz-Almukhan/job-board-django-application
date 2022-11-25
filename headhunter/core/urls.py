@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
+from core.views.api_views import vacancy_list_view
 from core.views.base import IndexView
 from core.views.response import ResumeAddResponseView, ShowResponse, AddMessageToResponse
 from core.views.resume import delete_resume, ResumeAddView, ResumeEditView, AddEducation, AddJob, update_resume, \
@@ -29,4 +30,5 @@ urlpatterns = [
     path('vacancy/add/response/', ResumeAddResponseView.as_view(), name='add_response'),
     path('responses/', ShowResponse.as_view(), name='show_responses'),
     path('send/message/<int:pk>', AddMessageToResponse.as_view(), name='send_message'),
+    path('api/vacancy', vacancy_list_view)
 ]

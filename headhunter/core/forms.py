@@ -9,6 +9,10 @@ class VacancyForm(forms.ModelForm):
         fields = ['name', 'salary', 'description', 'experience', 'category', 'is_active']
 
 
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False, label="Поиск вакансий")
+
+
 class ResumeChangeForm(forms.ModelForm):
     category = forms.ChoiceField(choices=CATEGORY, label='Категория вакансии', required=True)
     telegram = forms.CharField(required=True, widget=forms.TextInput(
