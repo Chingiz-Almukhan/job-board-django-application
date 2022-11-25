@@ -72,3 +72,7 @@ class JobAddEditForm(forms.ModelForm):
             {'class': 'form-control', 'min': "2018-01-01", 'max': "2090-12-31", 'type': 'date'})
         self.fields['end_date'].widget.attrs.update(
             {'class': 'form-control', 'min': "2018-01-01", 'max': "2090-12-31", 'type': 'date'})
+
+
+class CategoryForm(forms.Form):
+    category = forms.ChoiceField(choices=CATEGORY, required=False, label='Фильтровать вакансии')
