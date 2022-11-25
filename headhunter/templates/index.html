@@ -17,7 +17,7 @@
                     </div>
                     <!-- Search Box -->
                     <div class="row">
-                        {% if user.is_authenticated %}
+                         {% if user.is_authenticated %}
                             <div class="col-xl-8">
                                 {% include 'partial/search.html' %}
                             </div>
@@ -86,7 +86,6 @@
                 {% include 'partial/pagination.html' %}
             </div>
         </div>
-
     {% endif %}
 {% endblock %}
 {% block modal_block %}
