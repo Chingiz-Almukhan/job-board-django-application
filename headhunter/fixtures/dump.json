@@ -4,7 +4,7 @@
     "pk": 4,
     "fields": {
       "password": "pbkdf2_sha256$260000$DL4p1Pvj1ZL6ZDpqcTiuMS$Eryo6fYoo8TKAhwdN+xG87HfK0LEVD/m1f1plDrWyn8=",
-      "last_login": "2022-11-25T20:35:28.518Z",
+      "last_login": "2022-11-25T20:49:39.958Z",
       "is_superuser": false,
       "first_name": "",
       "last_name": "",
@@ -36,7 +36,7 @@
       "avatar": "avatars/портрет-го-ов-и-п-ечи-пере-ний-мо-о-ого-че-овека-в-костюме-и-го-убой-65164267.jpg",
       "username": "root1",
       "phone_number": "87085770358",
-      "user_role": "Employer",
+      "user_role": "Employee",
       "groups": [],
       "user_permissions": []
     }
