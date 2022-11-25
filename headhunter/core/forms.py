@@ -13,6 +13,10 @@ class SearchForm(forms.Form):
     search = forms.CharField(max_length=100, required=False, label="Поиск вакансий")
 
 
+class ResumeSearchForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False, label="Поиск резюме по категории")
+
+
 class ResumeChangeForm(forms.ModelForm):
     category = forms.ChoiceField(choices=CATEGORY, label='Категория вакансии', required=True)
     telegram = forms.CharField(required=True, widget=forms.TextInput(

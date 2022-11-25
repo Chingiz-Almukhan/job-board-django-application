@@ -2,88 +2,115 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% block main_block %}
-<div class="slider-area ">
-    <!-- Mobile Menu -->
-    <div class="slider-active">
-        <div class="single-slider slider-height d-flex align-items-center"
-             data-background="{% static 'assets/img/hero/h1_hero.jpg'%}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-9 col-md-10">
-                        <div class="hero__caption">
-                            <h1>Find the most exciting startup jobs</h1>
+    <div class="slider-area ">
+        <!-- Mobile Menu -->
+        <div class="slider-active">
+            <div class="single-slider slider-height d-flex align-items-center"
+                 data-background="{% static 'assets/img/hero/h1_hero.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-9 col-md-10">
+                            <div class="hero__caption">
+                                <h1>Find the most exciting startup jobs</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Search Box -->
-                <div class="row">
-                    <div class="col-xl-8">
-                       {% include 'partial/search.html' %}
+                    <!-- Search Box -->
+                    <div class="row">
+                        <div class="col-xl-8">
+                            {% include 'partial/search.html' %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container mt-4">
-    <div class="vacancy_container">
-        <h3 class="vacancies_title">
-            Вакансии
-        </h3>
-        <div id="vacancies" class="vacancies_list_block">
-            {% for v in vacancy %}
-            <a href="{% url 'vacancy_detail' v.pk %}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ v.name }}</h5>
-                    <p>{{ v.category }}</p>
-                    <p class="salary_text">{% load humanize %} {{ v.salary|intcomma }} KZT</p>
-                    <p>Компания:
-                        <a class="company_title" href="{% url 'employer_profile' v.author.pk %}">
-                            {{ v.author.username }}
+    <div class="container mt-4 pb-200">
+        <div class="vacancy_container">
+            {% if request.user.user_role == 'Employer' %}
+                <input type="text" hidden value="resume" id="id_for_link">
+                <h3 class="vacancies_title" >
+                    Резюме
+                </h3>
+                <div id="vacancies" class="vacancies_list_block">
+                    {% for v in vacancy %}
+                        <a href="{% url 'resume_detail' v.pk %}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ v.name }}</h5>
+                                <p>{{ v.category }}</p>
+                                <p class="salary_text">{% load humanize %} {{ v.salary|intcomma }} KZT</p>
+                                <p id="some_title">Кандидат
+                                    <a class="company_title" href="{% url 'employer_profile' v.author.pk %}">
+                                        {{ v.author.username }}
+                                    </a>
+                                </p>
+                                <p class="udated_vacancy mt-1">
+                                    Опубликовано: <span><b>{{ v.updated_at|date:"d-m-Y H:i" }}</b></span>
+                                </p>
+                            </div>
                         </a>
-                    </p>
-                    <p class="udated_vacancy mt-1">
-                        Опубликовано: <span><b>{{ v.updated_at|date:"d-m-Y H:i" }}</b></span>
-                    </p>
+                    {% endfor %}
                 </div>
-            </a>
-            {% endfor %}
+            {% else %}
+                <input type="text" hidden value="vacancy" id="id_for_link">
+                <h3 class="vacancies_title">
+                    Вакансии
+                </h3>
+                <div id="vacancies" class="vacancies_list_block">
+                    {% for v in vacancy %}
+                        <a href="{% url 'vacancy_detail' v.pk %}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ v.name }}</h5>
+                                <p>{{ v.category }}</p>
+                                <p class="salary_text">{% load humanize %} {{ v.salary|intcomma }} KZT</p>
+                                <p id="some_title">Компания
+                                    <a class="company_title" href="{% url 'employer_profile' v.author.pk %}">
+                                        {{ v.author.username }}
+                                    </a>
+                                </p>
+                                <p class="udated_vacancy mt-1">
+                                    Опубликовано: <span><b>{{ v.updated_at|date:"d-m-Y H:i" }}</b></span>
+                                </p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% include 'partial/pagination.html' %}
         </div>
-        {% include 'partial/pagination.html' %}
     </div>
-</div>
 {% endblock %}
 {% block modal_block %}
-<div id="registerModal" class="modal">
-    <div class="modal-content"
-         style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
-        <div>
-            <h4 class="register_title">Регистрация <span id="modalRegisterClose"
-                                                         class="close">&times;</span>
-            </h4>
-            <form action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form">
-                    {% bootstrap_form register_form %}
-                    {% bootstrap_button button_type="submit" content='Зарегистрироваться' %}
-                </div>
-            </form>
+    <div id="registerModal" class="modal">
+        <div class="modal-content"
+             style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+            <div>
+                <h4 class="register_title">Регистрация <span id="modalRegisterClose"
+                                                             class="close">&times;</span>
+                </h4>
+                <form action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form">
+                        {% bootstrap_form register_form %}
+                        {% bootstrap_button button_type="submit" content='Зарегистрироваться' %}
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div id="loginModal" class="modal">
-    <div class="modal-content"
-         style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
-        <div>
-            <h5>Вход <span id="closeLogin" class="close">&times;</span></h5>
-            <form action="{% url 'login' %}" method="POST">
-                {% csrf_token %}
-                <div class="form">
-                    {% bootstrap_form login_form %}
-                    {% bootstrap_button button_type="submit" content='Войти' %}
-                </div>
-            </form>
+    <div id="loginModal" class="modal">
+        <div class="modal-content"
+             style="background-color: white; margin: 10% auto; padding: 20px; width: 80%; border: 1px solid#888">
+            <div>
+                <h5>Вход <span id="closeLogin" class="close">&times;</span></h5>
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form">
+                        {% bootstrap_form login_form %}
+                        {% bootstrap_button button_type="submit" content='Войти' %}
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
