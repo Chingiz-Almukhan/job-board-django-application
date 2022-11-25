@@ -59,8 +59,8 @@ class JobAddEditForm(forms.ModelForm):
         attrs={'placeholder': 'Введите название', 'class': "form-control"}))
     description = forms.CharField(required=True, label='Обязанности', widget=forms.TextInput(
         attrs={'placeholder': 'Введите свои обязанности', 'class': "form-control"}))
-    start_date = forms.DateField(widget=DateInput, label='Дата начала обучения', required=True)
-    end_date = forms.DateField(widget=DateInput, label='Дата окончания обучения', required=True)
+    start_date = forms.DateField(widget=DateInput, label='Дата начала трудоустройства', required=True)
+    end_date = forms.DateField(widget=DateInput, label='Дата окончания', required=True)
 
     class Meta:
         model = Job

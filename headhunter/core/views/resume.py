@@ -121,7 +121,6 @@ def download_pdf(request, *args, **kwargs):
 
 def hide_resume(request, *args, **kwargs):
     resume = get_object_or_404(Resume, pk=kwargs['pk'])
-    print(resume.is_active)
     if resume.is_active is not True:
         resume.is_active = True
     else:

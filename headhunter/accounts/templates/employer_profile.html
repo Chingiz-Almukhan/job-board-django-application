@@ -15,12 +15,19 @@
                     <p class="user_mail">Мобильный телефон: <b>{{ user_obj.phone_number }}</b></p>
                     <p class="user_mail">Роль: <b>{{ user_obj.get_user_role_display }}</b></p>
                     {% if user_obj.user_role == 'Employer' %}
-                        <a href="{% url 'vacancy_create' %}" class="genric-btn primary circle">Создать вакансию</a>
+                        {% if user_obj.pk == request.user.pk %}
+                            <a href="{% url 'vacancy_create' %}" class="genric-btn primary circle">Создать вакансию</a>
+                        {% endif %}
                     {% else %}
-                        <a href="{% url 'add_resume' %}" class="genric-btn primary circle">Добавить резюме</a>
+                        {% if user_obj.pk == request.user.pk %}
+                            <a href="{% url 'add_resume' %}" class="genric-btn primary circle">Добавить резюме</a>
+                        {% endif %}
                     {% endif %}
-                    <a href="#" id="register_button" class="genric-btn info circle">Редактировать профиль</a>
-                    <a href="{% url 'show_responses' %}" id="register_button" class="genric-btn info circle">Отклики</a>
+                    {% if user_obj.pk == request.user.pk %}
+                        <a href="#" id="register_button" class="genric-btn info circle">Редактировать профиль</a>
+                        <a href="{% url 'show_responses' %}" id="register_button"
+                           class="genric-btn info circle">Отклики</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -40,6 +47,7 @@
                                                class="genric-btn primary circle ">Подробнее</a>
                                             <a href="{% url 'download' resume.pk %}"
                                                class="genric-btn primary circle mt-3">Скачать</a>
+                                        {% if user_obj.pk == request.user.pk %}
                                             <a href="{% url 'edit_resume' resume.pk %}"
                                                class="genric-btn primary circle mt-3">Изменить</a>
                                             {% if resume.is_active is not True %}
@@ -49,11 +57,14 @@
                                                 <a href="{% url 'hide' resume.pk %}"
                                                    class="genric-btn primary circle mt-3">Отобразить</a>
                                             {% endif %}
+                                        {% endif %}
                                         </div>
                                         <p class="udated_vacancy">
                                             Обновлено: <span>{{ resume.updated_at|date:"M d, Y G:i"}}</span>
+                                            {% if user_obj.pk == request.user.pk %}
                                             <a class="reload_btn" href="{% url 'update' resume.pk %}">Обновить <i
                                                     class="fa-solid fa-rotate"></i></a>
+                                            {% endif %}
                                         </p>
                                     </div>
                                 </div>
@@ -76,12 +87,16 @@
                                         <div class="btn__block">
                                             <a href="{% url 'vacancy_detail' v.pk %}"
                                                class="genric-btn primary circle">Подробнее</a>
+                                            {% if user_obj.pk == request.user.pk %}
                                             <a href="{% url 'vacancy_update' v.pk %}" class="genric-btn primary circle">Редактировать</a>
+                                            {% endif %}
                                         </div>
                                         <p class="udated_vacancy">
                                             Обновлено: <span>{{ v.updated_at }}</span>
+                                            {% if user_obj.pk == request.user.pk %}
                                             <a class="reload_btn" href="{% url 'reload' v.pk %}">Обновить <i
                                                     class="fa-solid fa-rotate"></i></a>
+                                            {% endif %}
                                         </p>
                                     </div>
                                 </div>
